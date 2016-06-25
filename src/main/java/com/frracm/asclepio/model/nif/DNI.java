@@ -1,8 +1,6 @@
 package com.frracm.asclepio.model.nif;
 
-public class DNI {
-	private static char[] LETTER_DNI = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S',
-			'Q', 'V', 'H', 'L', 'C', 'K', 'E' };
+public class DNI implements SpanishNIF {
 	private final Integer numero;
 	private final char letra;
 
@@ -18,13 +16,16 @@ public class DNI {
 		return numero.toString() + letra;
 	}
 
-	private boolean isValid() {
-
+	public boolean isValid() {
+		boolean response = true;
 		int rest = numero % 23;
-		if (letra == LETTER_DNI[rest]) {
-			return true;
-		} else {
-			return false;
+		if (letra != LETTER_DNI[rest]) {
+			response = false;
 		}
+		if (numero == null || numero > 99999999 || numero < 1){
+			response = false;
+		}
+	return response;
 	}
+	
 }
