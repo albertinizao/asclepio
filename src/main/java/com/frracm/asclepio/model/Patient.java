@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.springframework.data.annotation.Id;
+
 import com.frracm.asclepio.model.nif.NIF;
 
 public class Patient {
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
+	@Id
 	private Long numeroHistoriaClinica;
 	private NIF identityDocument;
 	private Date birthDate;
@@ -116,6 +120,11 @@ public class Patient {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 }
