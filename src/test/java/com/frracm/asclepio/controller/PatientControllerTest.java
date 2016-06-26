@@ -1,4 +1,4 @@
-package com.frracm.asclepio.service;
+package com.frracm.asclepio.controller;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -15,16 +15,16 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.frracm.asclepio.model.Patient;
-import com.frracm.asclepio.repository.PatientRepository;
+import com.frracm.asclepio.service.PatientService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PatientServiceTest {
+public class PatientControllerTest {
 
 	@Mock
-	private PatientRepository patientRepository;
+	private PatientService patientService;
 
 	@InjectMocks
-	private PatientService patientService;
+	private PatientController patientController;
 
 	@Test
 	public void whenGetAllThenInvokeGetAll() {
@@ -32,25 +32,11 @@ public class PatientServiceTest {
 		Patient patient = new Patient();
 		patient.setNumeroHistoriaClinica(1L);
 		expected.add(patient);
-		Mockito.when(patientRepository.getAll()).thenReturn(expected);
-		Collection<Patient> actual = patientService.getAll();
+		Mockito.when(patientService.getAll()).thenReturn(expected);
+		Collection<Patient> actual = patientController.list();
 		assertNotNull(actual);
 		assertTrue(actual.containsAll(expected));
 		assertTrue(expected.containsAll(actual));
 	}
 
-	@Test
-	public void givenPatientThenSaveIt() {
-		Patient patient = new Patient();
-		patient.setNumeroHistoriaClinica(1L);
-		patientService.saveOrUpdate(patient);
-		Mockito.verify(patientRepository).saveOrUpdate(patient);
-	}
-
-	@Test
-	public void givenIdThenDeleteIt() {
-		Long numeroHistoriaClinica = 1L;
-		patientService.remove(numeroHistoriaClinica);
-		Mockito.verify(patientRepository).remove(numeroHistoriaClinica);
-	}
 }
